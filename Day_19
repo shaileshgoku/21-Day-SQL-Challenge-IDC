@@ -1,0 +1,21 @@
+use hospital;
+### Practice Questions:
+
+# 1. Rank patients by satisfaction score within each service.
+
+
+
+# 2. Assign row numbers to staff ordered by their name.
+
+
+
+# 3. Rank services by total patients admitted.
+
+
+
+### Daily Challenge:
+
+# Question: For each service, rank the weeks by patient satisfaction score (highest first). 
+#           Show service, week, patient_satisfaction, patients_admitted, and the rank. Include only 
+#           the top 3 weeks per service.
+
