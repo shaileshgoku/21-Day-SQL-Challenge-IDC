@@ -1,0 +1,29 @@
+# Tables
+orders: order_id, date, time
+order_details: order_id, pizza_id, quantity
+pizzas: pizza_id, pizza_type_id
+pizza_types: pizza_type_id, name, category, ingredients.
+
+# Questions
+Phase 1: Foundation & Inspection
+Install IDC_Pizza.dump as IDC_Pizza server
+List all unique pizza categories.
+Display pizza_type_id, name, and ingredients, replacing NULL ingredients with "Missing Data". Show first 5 rows.
+Check for pizzas missing a price.
+
+Phase 2: Filtering & Exploration
+Orders placed on '2015-01-01'.
+List pizzas with price descending.
+Pizzas sold in sizes 'L' or 'XL'.
+Pizzas priced between $15.00 and $17.00.
+Pizzas with "Chicken" in the name.
+Orders on '2015-02-15' or placed after 8 PM.
+
+Phase 3: Sales Performance
+Total quantity of pizzas sold.
+Average pizza price.
+Total order value per order.
+Total quantity sold per pizza category.
+Categories with more than 5,000 pizzas sold.
+Pizzas never ordered.
+Price differences between different sizes of the same pizza.
