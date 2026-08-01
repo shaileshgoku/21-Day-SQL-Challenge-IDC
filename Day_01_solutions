@@ -3,7 +3,7 @@
 #1. Retrieve all columns from the `patients` table.
 select * from patients;
 
-![Alt text](images/day_01_1st.PNG)
+![1st_solution](images/day_01_1st.PNG)
 
 #2. Select only the `patient_id`, `name`, and `age` columns from the `patients` table.
 select patient_id, name, age from patients;
