@@ -36,8 +36,10 @@ FROM patients;
 #			 satisfaction across all services and weeks. Round the average satisfaction to 2 decimal places.
   
 SELECT SUM(patients_admitted) AS total_admitted, 
-       SUM(patients_refused) AS total_refused, 
-       ROUND(AVG(patient_satisfaction), 2) AS average_satisfaction
+
+SUM(patients_refused) AS total_refused, 
+
+ROUND(AVG(patient_satisfaction), 2) AS average_satisfaction
 
 FROM services_weekly; 
 
