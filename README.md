@@ -12,4 +12,4 @@ Databricks challenge - https://indiandataclub.notion.site/Databricks-14-Days-AI-
 
 another sql challenge - https://the-ai-model-heist-sql-challenge.onrender.com/
 
-#![solutions](/image/screenshot.png)
+
