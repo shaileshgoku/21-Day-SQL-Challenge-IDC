@@ -11,3 +11,5 @@ python challenge - https://indiandataclub.notion.site/30DaysOfPython-2e09b695c41
 Databricks challenge - https://indiandataclub.notion.site/Databricks-14-Days-AI-Challenge-2e09b695c411802398eed89908875221
 
 another sql challenge - https://the-ai-model-heist-sql-challenge.onrender.com/
+
+![solutions](/images/screenshot.png)
