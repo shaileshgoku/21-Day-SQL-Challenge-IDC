@@ -4,7 +4,7 @@
 select patient_id,name,age from patients
 limit 5;
 
-![solutions](/images/4.1.png)
+![solutions](/images/4.1.PNG)
 
 
 # 2. Show patients 11-20 using OFFSET
@@ -13,7 +13,7 @@ FROM patients
 ORDER BY patient_id
 LIMIT 10 OFFSET 10;
 
-![solutions](/images/4.2.png)
+![solutions](/images/4.2.PNG)
 
 
 # 3. Get the 10 most recent patient admissions based on arrival_date.
@@ -21,7 +21,7 @@ select patient_id,name,age,arrival_date from patients
 order by arrival_date desc
 limit 10;
 
-![solutions](/images/4.3.png)
+![solutions](/images/4.3.PNG)
 
 
 
@@ -33,4 +33,4 @@ order by satisfaction desc
 limit 5
 offset 2;
 
-![solutions](/images/4.challenge.png)
+![solutions](/images/4.challenge.PNG)
