@@ -39,7 +39,9 @@ SELECT SUM(patients_admitted) AS total_admitted,
        SUM(patients_refused) AS total_refused, 
        ROUND(AVG(patient_satisfaction), 2) AS average_satisfaction
 
-FROM services_weekly; -- since it is overall result asked. not per result asked in question. no group by is needed
+FROM services_weekly; 
+
+-- since it is overall result asked. not per result asked in question. no group by is needed
 
 /* don't use group by when question contains:
 Whenever you see phrases like:
