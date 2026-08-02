@@ -23,7 +23,7 @@ FROM patients;
 
 SELECT min(age) as minimum_age,
        
-       max(age) as maximum_age
+max(age) as maximum_age
 
 FROM patients;
 
