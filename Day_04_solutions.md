@@ -9,11 +9,8 @@ limit 5;
 
 ## 2. Show patients 11-20 using OFFSET
 SELECT *
-
 FROM patients
-
 ORDER BY patient_id
-
 LIMIT 10 OFFSET 10;
 
 ![solutions](/images/4.2.PNG)
