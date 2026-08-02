@@ -7,7 +7,7 @@ limit 5;
 ![solutions](/images/4.1.PNG)
 
 
-# 2. Show patients 11-20 using OFFSET
+## 2. Show patients 11-20 using OFFSET
 SELECT *
 FROM patients
 ORDER BY patient_id
