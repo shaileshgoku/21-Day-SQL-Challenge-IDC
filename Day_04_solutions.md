@@ -1,0 +1,36 @@
+### Practice Questions:
+# 1. Display the first 5 patients from the patients table.
+
+select patient_id,name,age from patients
+limit 5;
+
+![solutions](/images/4.1.png)
+
+
+# 2. Show patients 11-20 using OFFSET
+SELECT *
+FROM patients
+ORDER BY patient_id
+LIMIT 10 OFFSET 10;
+
+![solutions](/images/4.2.png)
+
+
+# 3. Get the 10 most recent patient admissions based on arrival_date.
+select patient_id,name,age,arrival_date from patients
+order by arrival_date desc
+limit 10;
+
+![solutions](/images/4.3.png)
+
+
+
+# Question: Find the 3rd to 7th highest patient satisfaction scores from the patients table, 
+# 			showing patient_id, name, service, and satisfaction. Display only these 5 records.
+
+select patient_id,name,service,satisfaction from patients
+order by satisfaction desc
+limit 5
+offset 2;
+
+![solutions](/images/4.challenge.png)
