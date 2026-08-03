@@ -39,7 +39,7 @@ GROUP BY role;
 
 
 
-#Question: For each hospital service, calculate the total number of patients admitted, 
+# Question: For each hospital service, calculate the total number of patients admitted, 
 #          total patients refused, and the admission rate (percentage of requests that were admitted). 
 #          Order by admission rate descending.
 SELECT service,
