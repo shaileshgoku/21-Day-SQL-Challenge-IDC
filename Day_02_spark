@@ -1,0 +1,32 @@
+
+
+
+# 2. Retrieve all staff members who work in the 'Emergency' service.
+
+staff_df.filter(staff_df.service == 'emergency').show()
+
++------------+----------------+------+---------+
+|    staff_id|      staff_name|  role|  service|
++------------+----------------+------+---------+
+|STF-5ca26577|    Allison Hill|doctor|emergency|
+|STF-02ae59ca|     Noah Rhodes|doctor|emergency|
+|STF-d8006e7c| Angie Henderson|doctor|emergency|
+|STF-212d8b31|   Daniel Wagner|doctor|emergency|
+|STF-107a58e4| Cristian Santos|doctor|emergency|
+|STF-ca932dea| Connie Lawrence| nurse|emergency|
+|STF-39082289| Abigail Shaffer| nurse|emergency|
+|STF-702887af|      Gina Moore| nurse|emergency|
+|STF-249f63bb| Gabrielle Davis| nurse|emergency|
+|STF-094f410b|      Ryan Munoz| nurse|emergency|
+|STF-d7ab0c23|  Monica Herrera| nurse|emergency|
+|STF-e51bdcb4|    Jamie Arnold| nurse|emergency|
+|STF-8cabb71f|    Lisa Hensley| nurse|emergency|
+|STF-34c0563d|Michele Williams| nurse|emergency|
+|STF-130577e6|    Dylan Miller| nurse|emergency|
+|STF-768c9d6f|   Brian Ramirez| nurse|emergency|
+|STF-abec8336|      Holly Wood| nurse|emergency|
+|STF-6f6535f8|    Derek Zuniga| nurse|emergency|
+|STF-b4fb711c|    Lisa Jackson| nurse|emergency|
+|STF-434f45a6|      Carla Gray| nurse|emergency|
++------------+----------------+------+---------+
+only showing top 20 rows
