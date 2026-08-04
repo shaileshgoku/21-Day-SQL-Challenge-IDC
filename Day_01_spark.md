@@ -61,6 +61,7 @@ patients_df.select('patient_id', 'name', 'age').show
 only showing top 20 rows
 
 #3. Display the first 10 records from the `services_weekly` table.
+
 services_weekly_df.show(10)
 
 +----+-----+----------------+--------------+----------------+-----------------+----------------+--------------------+------------+--------+
@@ -82,6 +83,7 @@ only showing top 10 rows
 ### Daily Challenge:
 
 # List all unique hospital services available in the hospital.
+
 services_weekly_df.select('service').distinct().show()
 
 +----------------+
