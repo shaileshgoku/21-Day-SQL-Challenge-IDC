@@ -1,4 +1,33 @@
+### Practice Questions:
 
+# 1.Find all patients who are older than 60 years.
+patients_df.filter(patients_df.age > 60).show()
+
++------------+------------------+---+------------+--------------+----------------+------------+
+|  patient_id|              name|age|arrival_date|departure_date|         service|satisfaction|
++------------+------------------+---+------------+--------------+----------------+------------+
+|PAT-f4b29bae|         Diana May| 83|  2025-06-26|    2025-06-30|       emergency|          81|
+|PAT-283cda07|   William Herrera| 62|  2025-12-26|    2025-12-27|       emergency|          66|
+|PAT-18f78014|     Kenneth Scott| 77|  2025-06-24|    2025-06-26|general_medicine|          61|
+|PAT-0beb4754|      Erin Edwards| 86|  2025-10-15|    2025-10-17|general_medicine|          66|
+|PAT-f0682772|      Jason Powell| 87|  2025-09-12|    2025-09-25|general_medicine|          67|
+|PAT-127ca40e|    Daniel Kennedy| 73|  2025-06-10|    2025-06-17|general_medicine|          80|
+|PAT-5044053e|       Angel Perry| 85|  2025-10-07|    2025-10-08|             ICU|          69|
+|PAT-736d270f| David Douglas Jr.| 80|  2025-04-25|    2025-04-26|         surgery|          73|
+|PAT-eacf84b5| Christopher Rubio| 72|  2025-10-05|    2025-10-16|         surgery|          63|
+|PAT-9ba7a6ee|       Joyce Solis| 86|  2025-03-16|    2025-03-22|       emergency|          77|
+|PAT-029113eb|   Victoria Larson| 84|  2025-12-22|    2025-12-31|         surgery|          97|
+|PAT-8b1e87b0|       Kathy Rivas| 75|  2025-04-27|    2025-05-07|general_medicine|          81|
+|PAT-fade1b7b| Stephanie Manning| 84|  2025-11-09|    2025-11-15|general_medicine|          86|
+|PAT-24a653c8|      Joshua Perry| 68|  2025-10-16|    2025-10-26|             ICU|          95|
+|PAT-70057243|     Melissa Gates| 61|  2025-12-31|    2026-01-11|general_medicine|          93|
+|PAT-84559395|       Jamie Smith| 72|  2025-03-14|    2025-03-23|         surgery|          99|
+|PAT-51e4d298|    Michael Powell| 73|  2025-11-07|    2025-11-08|       emergency|          71|
+|PAT-deada259|     John Anderson| 61|  2025-08-04|    2025-08-07|             ICU|          67|
+|PAT-4275a12b|        Alyssa Day| 69|  2025-01-25|    2025-01-27|             ICU|          84|
+|PAT-d1c95e77|Matthew Harrington| 81|  2025-04-13|    2025-04-14|general_medicine|          73|
++------------+------------------+---+------------+--------------+----------------+------------+
+only showing top 20 rows
 
 
 # 2. Retrieve all staff members who work in the 'Emergency' service.
@@ -30,3 +59,67 @@ staff_df.filter(staff_df.service == 'emergency').show()
 |STF-434f45a6|      Carla Gray| nurse|emergency|
 +------------+----------------+------+---------+
 only showing top 20 rows
+
+# 3. List all weeks where more than 100 patients requested admission in any service.
+services_weekly_df.filter(services_weekly_df.patients_request > 100).select('week').distinct().show()
+
++----+
+|week|
++----+
+|  44|
+|  12|
+|  22|
+|   1|
+|  52|
+|  13|
+|   6|
+|  16|
+|   3|
+|  40|
+|  48|
+|   5|
+|  15|
+|  43|
+|  37|
+|   9|
+|  17|
+|   4|
+|   8|
+|  49|
++----+
+only showing top 20 rows
+
+
+### Daily Challenge:
+
+# Find all patients admitted to 'Surgery' service with a satisfaction score below 70, 
+# showing their patient_id, name, age, and satisfaction score.
+
+patients_df.filter(patients_df.service == 'surgery').filter(patients_df.satisfaction < 70).select('patient_id', 'name', 'age', 'satisfaction').show()
+
++------------+-----------------+---+------------+
+|  patient_id|             name|age|satisfaction|
++------------+-----------------+---+------------+
+|PAT-09484753|Richard Rodriguez| 24|          61|
+|PAT-eacf84b5|Christopher Rubio| 72|          63|
+|PAT-d4f82ecb|     David Wright| 39|          66|
+|PAT-64a781e0|     Jamie Walton| 22|          66|
+|PAT-78c826d3|      John Bishop| 56|          62|
+|PAT-d977b532|  Yvonne Chambers| 26|          66|
+|PAT-dea8a3ab|Brandon Bailey MD|  8|          61|
+|PAT-9fa2fb78|      Diane Evans| 54|          67|
+|PAT-30e54d48|  Marie Christian| 86|          61|
+|PAT-98dd495d|   Heather Fields| 29|          67|
+|PAT-112d537f|    Kevin Oconnor| 89|          65|
+|PAT-25a0eac5|  Jordan Chambers| 43|          67|
+|PAT-d0adb997|   Trevor Johnson| 15|          61|
+|PAT-fe52b6dc|         Ana Hill| 71|          62|
+|PAT-46c5550c|  Kimberly Nguyen| 85|          61|
+|PAT-a7b89463|   Nicole Parrish| 84|          60|
+|PAT-e6090bc8|      Paul Wilson| 82|          61|
+|PAT-1f61e183|   Joanna Pacheco| 72|          63|
+|PAT-9ab3b294|  Felicia Aguilar|  7|          66|
+|PAT-41e896d3|       Chad Jones|  7|          60|
++------------+-----------------+---+------------+
+only showing top 20 rows
+
