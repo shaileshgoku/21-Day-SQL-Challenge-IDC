@@ -1,0 +1,96 @@
+### Practice Questions:
+
+#1. Retrieve all columns from the `patients` table.
+
+patients_df.select('*').show()
+
++------------+-----------------+---+------------+--------------+----------------+------------+
+|  patient_id|             name|age|arrival_date|departure_date|         service|satisfaction|
++------------+-----------------+---+------------+--------------+----------------+------------+
+|PAT-09484753|Richard Rodriguez| 24|  2025-03-16|    2025-03-22|         surgery|          61|
+|PAT-f0644084|   Shannon Walker|  6|  2025-12-13|    2025-12-14|         surgery|          83|
+|PAT-ac6162e4|     Julia Torres| 24|  2025-06-29|    2025-07-05|general_medicine|          83|
+|PAT-3dda2bb5|  Crystal Johnson| 32|  2025-10-12|    2025-10-23|       emergency|          81|
+|PAT-08591375|      Garrett Lin| 25|  2025-02-18|    2025-02-25|             ICU|          76|
+|PAT-f4b29bae|        Diana May| 83|  2025-06-26|    2025-06-30|       emergency|          81|
+|PAT-283cda07|  William Herrera| 62|  2025-12-26|    2025-12-27|       emergency|          66|
+|PAT-5b61868c|    Ashley Waller|  0|  2025-05-21|    2025-06-04|             ICU|          82|
+|PAT-f9c8afa6|     Victor Baker| 50|  2025-07-30|    2025-08-13|general_medicine|          91|
+|PAT-5290be70| Jeffrey Chandler| 29|  2025-11-01|    2025-11-14|       emergency|          88|
+|PAT-003ce690|      Larry Dixon| 29|  2025-01-19|    2025-01-21|             ICU|          60|
+|PAT-18f78014|    Kenneth Scott| 77|  2025-06-24|    2025-06-26|general_medicine|          61|
+|PAT-69dc0dc1|      April Frost| 37|  2025-11-15|    2025-11-19|general_medicine|          60|
+|PAT-95afe21e|  Michelle Harmon|  7|  2025-02-24|    2025-03-03|       emergency|          62|
+|PAT-cc50ad71|      Helen Jones| 31|  2025-06-11|    2025-06-23|         surgery|          92|
+|PAT-0beb4754|     Erin Edwards| 86|  2025-10-15|    2025-10-17|general_medicine|          66|
+|PAT-3223420e|   Michelle Evans|  7|  2025-11-09|    2025-11-16|       emergency|          62|
+|PAT-f0682772|     Jason Powell| 87|  2025-09-12|    2025-09-25|general_medicine|          67|
+|PAT-af65396f|   Cameron Fisher| 53|  2025-08-27|    2025-09-01|       emergency|          62|
+|PAT-dbbf6d1f|        Megan Orr| 50|  2025-04-02|    2025-04-10|       emergency|          93|
++------------+-----------------+---+------------+--------------+----------------+------------+
+only showing top 20 rows
+
+#2. Select only the `patient_id`, `name`, and `age` columns from the `patients` table.
+
+patients_df.select('patient_id', 'name', 'age').show
+
++------------+-----------------+---+
+|  patient_id|             name|age|
++------------+-----------------+---+
+|PAT-09484753|Richard Rodriguez| 24|
+|PAT-f0644084|   Shannon Walker|  6|
+|PAT-ac6162e4|     Julia Torres| 24|
+|PAT-3dda2bb5|  Crystal Johnson| 32|
+|PAT-08591375|      Garrett Lin| 25|
+|PAT-f4b29bae|        Diana May| 83|
+|PAT-283cda07|  William Herrera| 62|
+|PAT-5b61868c|    Ashley Waller|  0|
+|PAT-f9c8afa6|     Victor Baker| 50|
+|PAT-5290be70| Jeffrey Chandler| 29|
+|PAT-003ce690|      Larry Dixon| 29|
+|PAT-18f78014|    Kenneth Scott| 77|
+|PAT-69dc0dc1|      April Frost| 37|
+|PAT-95afe21e|  Michelle Harmon|  7|
+|PAT-cc50ad71|      Helen Jones| 31|
+|PAT-0beb4754|     Erin Edwards| 86|
+|PAT-3223420e|   Michelle Evans|  7|
+|PAT-f0682772|     Jason Powell| 87|
+|PAT-af65396f|   Cameron Fisher| 53|
+|PAT-dbbf6d1f|        Megan Orr| 50|
++------------+-----------------+---+
+only showing top 20 rows
+
+#3. Display the first 10 records from the `services_weekly` table.
+services_weekly_df.show(10)
+
++----+-----+----------------+--------------+----------------+-----------------+----------------+--------------------+------------+--------+
+|week|month|         service|available_beds|patients_request|patients_admitted|patients_refused|patient_satisfaction|staff_morale|   event|
++----+-----+----------------+--------------+----------------+-----------------+----------------+--------------------+------------+--------+
+|   1|    1|       emergency|            32|              76|               32|              44|                  67|          70|    none|
+|   1|    1|         surgery|            45|             130|               45|              85|                  83|          78|     flu|
+|   1|    1|general_medicine|            37|             201|               37|             164|                  97|          43|     flu|
+|   1|    1|             ICU|            22|              31|               22|               9|                  84|          91|     flu|
+|   2|    1|       emergency|            28|             169|               28|             141|                  75|          64|    none|
+|   2|    1|         surgery|            40|              26|               26|               0|                  96|          56|    none|
+|   2|    1|general_medicine|            43|             183|               43|             140|                  73|          93|     flu|
+|   2|    1|             ICU|            16|               7|                7|               0|                  79|          85|donation|
+|   3|    1|       emergency|            32|             177|               32|             145|                  73|          58|     flu|
+|   3|    1|         surgery|            27|              66|               27|              39|                  63|          72|     flu|
++----+-----+----------------+--------------+----------------+-----------------+----------------+--------------------+------------+--------+
+only showing top 10 rows
+
+### Daily Challenge:
+
+# List all unique hospital services available in the hospital.
+services_weekly_df.select('service').distinct().show()
+
++----------------+
+|         service|
++----------------+
+|general_medicine|
+|       emergency|
+|         surgery|
+|             ICU|
++----------------+
+
+
