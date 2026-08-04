@@ -47,6 +47,8 @@ FROM patients
 
 WHERE LENGTH(name) > 10;
 
+========================================================================================================
+
 WHERE filters rows.
 
 If the condition uses columns from the current row,
