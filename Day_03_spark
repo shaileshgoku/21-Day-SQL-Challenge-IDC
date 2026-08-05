@@ -1,0 +1,113 @@
+
+### Practice Questions:
+
+# 1. List all patients sorted by age in descending order.
+patients_df.select("name", "age") \
+           .orderBy("age", ascending=False) \
+           .show()
+
++-----------------+---+
+|             name|age|
++-----------------+---+
+|    Cynthia Moore| 89|
+|    Kevin Oconnor| 89|
+|      Sharon Boyd| 89|
+|     Louis Martin| 89|
+|   Janet Kane DVM| 89|
+|     Jerry Peters| 89|
+|   Clayton Steele| 89|
+|    Kenneth Sharp| 89|
+|   Carmen Preston| 89|
+|      Amanda Hill| 89|
+|     Martha Smith| 89|
+|    George Harper| 88|
+|    Nathan Malone| 88|
+|   Nathan Freeman| 88|
+| Pamela Gutierrez| 88|
+|      Sara Fuller| 88|
+|   Jennifer Jones| 88|
+|Christopher Moore| 88|
+|     Jose Ramirez| 88|
+|      Ryan Murphy| 88|
++-----------------+---+
+only showing top 20 rows
+
+
+# 2. Show all services_weekly data sorted by week number ascending and patients_request descending.
+services_weekly_df.orderBy(services_weekly_df.week.asc(), services_weekly_df.patients_request.desc()).show()
+
++----+-----+----------------+--------------+----------------+-----------------+----------------+--------------------+------------+--------+
+|week|month|         service|available_beds|patients_request|patients_admitted|patients_refused|patient_satisfaction|staff_morale|   event|
++----+-----+----------------+--------------+----------------+-----------------+----------------+--------------------+------------+--------+
+|   1|    1|general_medicine|            37|             201|               37|             164|                  97|          43|     flu|
+|   1|    1|         surgery|            45|             130|               45|              85|                  83|          78|     flu|
+|   1|    1|       emergency|            32|              76|               32|              44|                  67|          70|    none|
+|   1|    1|             ICU|            22|              31|               22|               9|                  84|          91|     flu|
+|   2|    1|general_medicine|            43|             183|               43|             140|                  73|          93|     flu|
+|   2|    1|       emergency|            28|             169|               28|             141|                  75|          64|    none|
+|   2|    1|         surgery|            40|              26|               26|               0|                  96|          56|    none|
+|   2|    1|             ICU|            16|               7|                7|               0|                  79|          85|donation|
+|   3|    1|       emergency|            32|             177|               32|             145|                  73|          58|     flu|
+|   3|    1|         surgery|            27|              66|               27|              39|                  63|          72|     flu|
+|   3|    1|general_medicine|            37|              58|               37|              21|                  95|          63|    none|
+|   3|    1|             ICU|            20|              21|               20|               1|                  82|          89|    none|
+|   4|    1|       emergency|            32|             157|               32|             125|                  83|          75|    none|
+|   4|    1|general_medicine|            43|             152|               43|             109|                  67|          66|     flu|
+|   4|    1|         surgery|            56|              57|               56|               1|                  74|          94|    none|
+|   4|    1|             ICU|            20|              21|               20|               1|                  64|          85|     flu|
+|   5|    2|       emergency|            25|             388|               25|             363|                  93|          72|     flu|
+|   5|    2|general_medicine|            40|             103|               40|              63|                  73|          52|    none|
+|   5|    2|         surgery|            26|              70|               26|              44|                  81|          83|donation|
+|   5|    2|             ICU|            22|              13|               13|               0|                  73|          88|    none|
++----+-----+----------------+--------------+----------------+-----------------+----------------+--------------------+------------+--------+
+only showing top 20 rows
+
+
+# 3. Display staff members sorted alphabetically by their names.
+staff_df.select("staff_name") \
+        .orderBy("staff_name") \
+        .show()
+
++-----------------+
+|       staff_name|
++-----------------+
+|       Aaron Wise|
+|  Abigail Shaffer|
+|    Aimee Montoya|
+|     Allison Hill|
+|       Amber Kidd|
+|        Amy Silva|
+|     Angela Lopez|
+|  Angelica Tucker|
+|  Angie Henderson|
+|   Anna Henderson|
+| Anthony Humphrey|
+|Anthony Rodriguez|
+|      April Frost|
+|    Ashley Waller|
+|     Brent Jordan|
+|    Brian Ramirez|
+|  Brian Rodriguez|
+|  Brittany Farmer|
+|Brittney Phillips|
+|   Cameron Parker|
++-----------------+
+only showing top 20 rows
+
+
+from pyspark.sql.functions import sum
+
+# Question: Retrieve the top 5 weeks with the highest patient refusals across all services,
+# showing week, service, patients_refused, and patients_request. Sort by patients_refused in descending order.
+services_weekly_df.groupBy('week').agg(sum('patients_refused').alias('total_refused')).orderBy('total_refused', ascending=False).limit(5).show()
+
++----+-------------+
+|week|total_refused|
++----+-------------+
+|   5|          470|
+|  12|          355|
+|  51|          303|
+|   1|          302|
+|   2|          281|
++----+-------------+
+
