@@ -1,0 +1,115 @@
+#1. Display the first 5 patients from the patients table.
+patients_df.select('patient_id', 'name', 'age').show(5)
+
++------------+-----------------+---+
+|  patient_id|             name|age|
++------------+-----------------+---+
+|PAT-09484753|Richard Rodriguez| 24|
+|PAT-f0644084|   Shannon Walker|  6|
+|PAT-ac6162e4|     Julia Torres| 24|
+|PAT-3dda2bb5|  Crystal Johnson| 32|
+|PAT-08591375|      Garrett Lin| 25|
++------------+-----------------+---+
+only showing top 5 rows
+
+# 2. Show patients 11-20 using OFFSET
+patients_df.orderBy('patient_id').offset(10).limit(10).show()
+
++------------+-------------------+---+------------+--------------+----------------+------------+
+|  patient_id|               name|age|arrival_date|departure_date|         service|satisfaction|
++------------+-------------------+---+------------+--------------+----------------+------------+
+|PAT-03ae75aa|    Jordan Williams| 61|  2025-08-27|    2025-08-30|         surgery|          97|
+|PAT-03d0b953| Michelle Davis DVM| 82|  2025-03-09|    2025-03-22|       emergency|          88|
+|PAT-03f5abbe|       Dean Donovan| 11|  2025-01-24|    2025-02-06|         surgery|          84|
+|PAT-044a304c|      George Harper| 88|  2025-10-05|    2025-10-09|         surgery|          89|
+|PAT-0477a000|       Michael Wang|  3|  2025-07-29|    2025-07-30|       emergency|          75|
+|PAT-04866ac6|    Scott Alexander| 20|  2025-04-19|    2025-04-23|         surgery|          78|
+|PAT-04a8031e|          Jake Shaw| 83|  2025-06-10|    2025-06-22|             ICU|          67|
+|PAT-04be60be|Bradley Johnson DDS| 83|  2025-11-18|    2025-12-02|general_medicine|          93|
+|PAT-06a8ea25|    Alexander Gomez| 83|  2025-04-01|    2025-04-03|       emergency|          63|
+|PAT-06d975bc|      Donald Medina| 21|  2025-05-14|    2025-05-25|general_medicine|          69|
++------------+-------------------+---+------------+--------------+----------------+------------+
+
+
+# 2. Show patients 11-20 using OFFSET
+patients_df.orderBy('patient_id').limit(10).offset(10).show()
+
+# why ouptput is empty?
+
+"""
+The output is empty because of the order of the limit() and offset() operations. 
+When you use patients_df.orderBy('patient_id').limit(10).offset(10), 
+Spark first takes the first 10 patients after ordering (limit(10)). 
+Then, it tries to skip 10 patients from that already limited set of 10 patients (offset(10)), 
+which results in an empty selection. 
+To get patients 11-20, you should apply the offset() first to skip the initial 10 patients, 
+and then apply limit() to take the next 10 patients from the remaining dataset. 
+
+"""
+
++----------+----+---+------------+--------------+-------+------------+
+|patient_id|name|age|arrival_date|departure_date|service|satisfaction|
++----------+----+---+------------+--------------+-------+------------+
++----------+----+---+------------+--------------+-------+------------+
+
+
+# 3. Get the 10 most recent patient admissions based on arrival_date.
+from pyspark.sql.functions import col
+
+patients_df.select(
+    "patient_id",
+    "name",
+    "age",
+    "arrival_date"
+).orderBy(
+    col("arrival_date").desc()
+).limit(10).show()
+
++------------+----------------+---+------------+
+|  patient_id|            name|age|arrival_date|
++------------+----------------+---+------------+
+|PAT-70057243|   Melissa Gates| 61|  2025-12-31|
+|PAT-8ef38395|      Ruben Dunn| 69|  2025-12-31|
+|PAT-3513ebf2|  Danielle Smith| 60|  2025-12-31|
+|PAT-e11a0e0e|   William Keith| 61|  2025-12-31|
+|PAT-d85f1bec|    Charles Shah| 69|  2025-12-30|
+|PAT-93f48cc9| Michael Elliott| 54|  2025-12-30|
+|PAT-f71341e8|Veronica Simpson|  3|  2025-12-30|
+|PAT-ce009d6c| Denise Martinez| 29|  2025-12-30|
+|PAT-f8324089|   Curtis Taylor| 65|  2025-12-30|
+|PAT-1a762a65|Vanessa Hatfield| 85|  2025-12-30|
++------------+----------------+---+------------+
+
+
+# Question: Find the 3rd to 7th highest patient satisfaction scores from the patients table,
+# showing patient_id, name, service, and satisfaction. Display only these 5 records.
+
+patients_df.select('patient_id','name','service','satisfaction').orderBy('satisfaction').offset(2).limit(5).show()
+
++------------+-----------------+----------------+------------+
+|  patient_id|             name|         service|satisfaction|
++------------+-----------------+----------------+------------+
+|PAT-f6746853|    Tammie Bright|general_medicine|          60|
+|PAT-00b64d32|     Amber Obrien|general_medicine|          60|
+|PAT-89105c60|  Colton Martinez|             ICU|          60|
+|PAT-49865d7c|Christian Leblanc|             ICU|          60|
+|PAT-a7b89463|   Nicole Parrish|         surgery|          60|
++------------+-----------------+----------------+------------+
+
+
+Before writing the PySpark code, break the SQL into steps:
+
+SELECT ...
+FROM patients
+ORDER BY satisfaction DESC
+LIMIT 5
+OFFSET 2
+
+Then map each clause:
+
+FROM      → patients_df
+SELECT    → select(...)
+ORDER BY  → orderBy(...)
+OFFSET    → offset(...)
+LIMIT     → limit(...)
+SHOW      → show()
