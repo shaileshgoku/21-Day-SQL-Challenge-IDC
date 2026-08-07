@@ -1,0 +1,49 @@
+#1. Count the total number of patients in the hospital.
+patients_df.count()
+
+1000
+
+
+# 2. Calculate the average satisfaction score of all patients.
+from pyspark.sql.functions import avg
+
+patients_df.agg(
+    avg("satisfaction").alias("average_satisfaction_score")
+).show()
+
++--------------------------+
+|average_satisfaction_score|
++--------------------------+
+|                    79.597|
++--------------------------+
+
+
+# 3. Find the minimum and maximum age of patients.
+from pyspark.sql.functions import min, max
+
+patients_df.agg(
+    min("age").alias("minimum_age"),
+    max("age").alias("maximum_age")
+).show()
+
++-----------+-----------+
+|minimum_age|maximum_age|
++-----------+-----------+
+|          0|         89|
++-----------+-----------+
+
+
+from pyspark.sql.functions import sum, avg, round, col
+
+services_weekly_df.agg(
+    sum(col("patients_admitted")).alias("total_admitted"),
+    sum(col("patients_refused")).alias("total_refused"),
+    round(avg(col("patient_satisfaction")), 2).alias("average_satisfaction")
+).show()
+
++--------------+-------------+--------------------+
+|total_admitted|total_refused|average_satisfaction|
++--------------+-------------+--------------------+
+|          5851|         7642|                80.0|
++--------------+-------------+--------------------+
+
