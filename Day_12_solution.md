@@ -120,3 +120,57 @@ JOIN weekly_status AS ws
 ON sw.week = ws.week
 GROUP BY ws.has_event
 ORDER BY avg_patient_satisfaction DESC;
+
+WITH weekly_status AS (
+
+SELECT
+
+week,
+
+MAX(
+
+CASE
+
+WHEN event IS NOT NULL
+
+AND event <> 'none'
+
+THEN 1
+
+ELSE 0
+
+END
+
+) AS has_event
+
+FROM services_weekly
+
+GROUP BY week
+
+)
+
+SELECT
+
+CASE
+
+WHEN ws.has_event = 1 THEN 'With Event'
+
+ELSE 'No Event'
+
+END AS event_status,
+
+COUNT(DISTINCT sw.week) AS week_count,
+
+ROUND(AVG(sw.patient_satisfaction), 2) AS avg_patient_satisfaction,
+
+ROUND(AVG(sw.staff_morale), 2) AS avg_staff_morale
+
+FROM services_weekly AS sw
+
+JOIN weekly_status AS ws
+
+ON sw.week = ws.week
+
+GROUP BY ws.has_event
+
+ORDER BY avg_patient_satisfaction DESC;
