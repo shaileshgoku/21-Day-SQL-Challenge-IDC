@@ -1,4 +1,4 @@
-<div align="left">
+<div align="left"> 
 # 1. Find all weeks in services_weekly where no special event occurred.
 
 select distinct week from services_weekly
@@ -92,4 +92,4 @@ ORDER BY avg_patient_satisfaction DESC;
 
 ![solutions](/images/12.4.PNG)
 
-</div>
+ </div>
