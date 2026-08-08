@@ -1,0 +1,73 @@
+# 1. Count the number of patients by each service.
+
+import pyspark.sql.functions as F
+
+patients_df.groupBy('service').agg(
+
+F.count('name').alias('no_of_patients')).show()
+
++----------------+--------------+
+|         service|no_of_patients|
++----------------+--------------+
+|general_medicine|           242|
+|       emergency|           263|
+|         surgery|           254|
+|             ICU|           241|
++----------------+--------------+
+
+
+# 2. Calculate the average age of patients grouped by service.
+
+
+import pyspark.sql.functions as F
+
+patients_df.groupBy("service").agg(
+    F.round(F.avg("age"), 0).alias("avg_age")
+).show()
+
++----------------+-------+
+|         service|avg_age|
++----------------+-------+
+|general_medicine|   46.0|
+|       emergency|   45.0|
+|         surgery|   46.0|
+|             ICU|   44.0|
++----------------+-------+
+
+# 3. Find the total number of staff members per role.
+
+staff_df.groupBy('role').agg(F.count('staff_name').alias('total_staff')).show()
+
++-----------------+-----------+
+|             role|total_staff|
++-----------------+-----------+
+|            nurse|         76|
+|nursing_assistant|         32|
+|           doctor|         18|
++-----------------+-----------+
+
+import pyspark.sql.functions as F
+
+# Question: For each hospital service, calculate the total number of patients admitted,
+# total patients refused, and the admission rate (percentage of requests that were admitted).
+# Order by admission rate descending.
+
+
+services_weekly_df.groupBy('service').agg(
+    F.sum('patients_admitted').alias('total_admitted'),
+    F.sum('patients_refused').alias('total_refused'),
+    F.round(
+        (F.sum('patients_admitted') * 100.0) / F.sum('patients_request'),
+        2
+    ).alias('admission_rate')
+).orderBy('admission_rate', ascending=False).show()
+
++----------------+--------------+-------------+--------------+
+|         service|total_admitted|total_refused|admission_rate|
++----------------+--------------+-------------+--------------+
+|             ICU|           648|          141|         82.13|
+|         surgery|          1686|          555|         75.23|
+|general_medicine|          2332|         1938|         54.61|
+|       emergency|          1185|         5008|         19.13|
++----------------+--------------+-------------+--------------+
+
