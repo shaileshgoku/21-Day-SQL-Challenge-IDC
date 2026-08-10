@@ -1,0 +1,133 @@
+SELECT ...
+FROM services_weekly
+WHERE patients_request > 100
+GROUP BY service
+HAVING SUM(patients_refused) > 50;
+=====================================================================
+
+Raw rows
+   ↓
+WHERE
+   ↓
+GROUP BY
+   ↓
+AGGREGATION
+   ↓
+HAVING
+
+================================================================
+
+df.filter(...)                 # WHERE
+  .groupBy(...)
+  .agg(...)
+  .filter(...)                 # HAVING
+
+================================================================
+
+# Find services that have admitted more than 500 patients in total.
+# SELECT service,
+# sum(patients_admitted) as total_admitted
+# FROM services_weekly
+# GROUP BY service
+# HAVING sum(patients_admitted) > 500;
+
+import pyspark.sql.functions as F
+
+services_weekly_df.groupBy("service")\
+.agg(F.sum("patients_admitted").alias("total_admitted"))\
+.filter(F.col("total_admitted") > 500).show()
+
++----------------+--------------+
+|         service|total_admitted|
++----------------+--------------+
+|general_medicine|          2332|
+|       emergency|          1185|
+|         surgery|          1686|
+|             ICU|           648|
++----------------+--------------+
+
+# Show services where average patient satisfaction is below 75.
+# SELECT service,
+# avg(patient_satisfaction) as patient_satisfaction
+# FROM services_weekly
+# GROUP BY service
+# HAVING avg(patient_satisfaction) < 75;
+
+services_weekly_df.groupBy("service")\
+.agg(F.avg("patient_satisfaction").alias("satisfaction_of_patient"))\
+.filter(F.col("satisfaction_of_patient")<75).show()
+
++-------+-----------------------+
+|service|satisfaction_of_patient|
++-------+-----------------------+
++-------+-----------------------+
+
+# List weeks where total staff presence across all services was less than 50.
+# SELECT week,
+
+# SUM(present) AS total_staff_presence
+
+# FROM staff_schedule
+
+# GROUP BY week
+
+# HAVING SUM(present) < 50;
+
+staff_schedule_df.groupBy("week")\
+.agg(F.sum("present").alias("total_staff_presence"))\
+.filter(F.col("total_staff_presence")<50).show()
+
++----+--------------------+
+|week|total_staff_presence|
++----+--------------------+
+|  31|                  16|
+|  34|                  14|
+|  28|                  16|
+|  26|                  18|
+|  27|                   0|
+|  44|                  17|
+|  12|                   0|
+|  22|                  16|
+|  47|                  17|
+|   1|                  17|
+|  52|                  18|
+|  13|                  14|
+|   6|                   0|
+|  16|                  17|
+|   3|                   0|
+|  20|                  17|
+|  40|                  18|
+|  48|                   0|
+|   5|                  18|
+|  19|                  18|
++----+--------------------+
+only showing top 20 rows
+
+# Question: Identify services that refused more than 100 patients in total and had an average patient
+# satisfaction below 80. Show service name, total refused, and average satisfaction.
+
+# SELECT service,
+
+# sum(patients_refused) as total_refused,
+
+# avg(patient_satisfaction) aS avg_satisfaction
+
+# FROM services_weekly
+
+# GROUP BY service
+
+# HAVING sum(patients_refused) > 100 and avg(patient_satisfaction) < 80;
+
+services_weekly_df.groupBy("service")\
+.agg(F.sum("patients_refused").alias("total_refused"),
+     F.avg("patient_satisfaction").alias("avg_satisfaction"))\
+     .filter((F.col("total_refused")>100) &
+             (F.col("avg_satisfaction")<80)).show()
+
++---------+-------------+-----------------+
+|  service|total_refused| avg_satisfaction|
++---------+-------------+-----------------+
+|emergency|         5008|77.88461538461539|
+|  surgery|          555|79.26923076923077|
++---------+-------------+-----------------+
+
