@@ -1,0 +1,150 @@
+# Convert all patient names to uppercase.
+
+import pyspark.sql.functions as F
+
+patients_df.select(F.upper("name").alias("patient_name")).show()
+
++-----------------+
+|     patient_name|
++-----------------+
+|RICHARD RODRIGUEZ|
+|   SHANNON WALKER|
+|     JULIA TORRES|
+|  CRYSTAL JOHNSON|
+|      GARRETT LIN|
+|        DIANA MAY|
+|  WILLIAM HERRERA|
+|    ASHLEY WALLER|
+|     VICTOR BAKER|
+| JEFFREY CHANDLER|
+|      LARRY DIXON|
+|    KENNETH SCOTT|
+|      APRIL FROST|
+|  MICHELLE HARMON|
+|      HELEN JONES|
+|     ERIN EDWARDS|
+|   MICHELLE EVANS|
+|     JASON POWELL|
+|   CAMERON FISHER|
+|        MEGAN ORR|
++-----------------+
+only showing top 20 rows
+
+# Find the length of each staff member's name.
+
+staff_df.select("staff_name",F.length("staff_name").alias("staff_name_length")).show()
+
++----------------+-----------------+
+|      staff_name|staff_name_length|
++----------------+-----------------+
+|    Allison Hill|               12|
+|     Noah Rhodes|               11|
+| Angie Henderson|               15|
+|   Daniel Wagner|               13|
+| Cristian Santos|               15|
+| Connie Lawrence|               15|
+| Abigail Shaffer|               15|
+|      Gina Moore|               10|
+| Gabrielle Davis|               15|
+|      Ryan Munoz|               10|
+|  Monica Herrera|               14|
+|    Jamie Arnold|               12|
+|    Lisa Hensley|               12|
+|Michele Williams|               16|
+|    Dylan Miller|               12|
+|   Brian Ramirez|               13|
+|      Holly Wood|               10|
+|    Derek Zuniga|               12|
+|    Lisa Jackson|               12|
+|      Carla Gray|               10|
++----------------+-----------------+
+only showing top 20 rows
+
+
+# Concatenate staff_id and staff_name with a hyphen separator.
+
+staff_df.select(F.concat_ws("-","staff_id","staff_name").alias("combined_id_name")).show()
+
++--------------------+
+|    combined_id_name|
++--------------------+
+|STF-5ca26577-Alli...|
+|STF-02ae59ca-Noah...|
+|STF-d8006e7c-Angi...|
+|STF-212d8b31-Dani...|
+|STF-107a58e4-Cris...|
+|STF-ca932dea-Conn...|
+|STF-39082289-Abig...|
+|STF-702887af-Gina...|
+|STF-249f63bb-Gabr...|
+|STF-094f410b-Ryan...|
+|STF-d7ab0c23-Moni...|
+|STF-e51bdcb4-Jami...|
+|STF-8cabb71f-Lisa...|
+|STF-34c0563d-Mich...|
+|STF-130577e6-Dyla...|
+|STF-768c9d6f-Bria...|
+|STF-abec8336-Holl...|
+|STF-6f6535f8-Dere...|
+|STF-b4fb711c-Lisa...|
+|STF-434f45a6-Carl...|
++--------------------+
+only showing top 20 rows
+
+
+# Question: Create a patient summary that shows patient_id, full name in uppercase, service in lowercase,
+# age category (if age >= 65 then 'Senior', if age >= 18 then 'Adult', else 'Minor'),
+# and name length. Only show patients whose name length is greater than 10 characters.
+
+patients_df.select(
+    "patient_id",
+    F.upper("name").alias("patient_name"),
+    F.lower("service").alias("service"),
+    "age",
+    F.when(col("age") >= 65, "Senior")
+    .when(col("age") >= 18, "Adult")
+    .otherwise("Minor").alias("age_category"),
+    F.length("name").alias("name_Length")
+).filter(F.col("name_Length")>10).show()
+
++------------+-----------------+----------------+---+------------+-----------+
+|  patient_id|     patient_name|         service|age|age_category|name_Length|
++------------+-----------------+----------------+---+------------+-----------+
+|PAT-09484753|RICHARD RODRIGUEZ|         surgery| 24|       Adult|         17|
+|PAT-f0644084|   SHANNON WALKER|         surgery|  6|       Minor|         14|
+|PAT-ac6162e4|     JULIA TORRES|general_medicine| 24|       Adult|         12|
+|PAT-3dda2bb5|  CRYSTAL JOHNSON|       emergency| 32|       Adult|         15|
+|PAT-08591375|      GARRETT LIN|             icu| 25|       Adult|         11|
+|PAT-283cda07|  WILLIAM HERRERA|       emergency| 62|       Adult|         15|
+|PAT-5b61868c|    ASHLEY WALLER|             icu|  0|       Minor|         13|
+|PAT-f9c8afa6|     VICTOR BAKER|general_medicine| 50|       Adult|         12|
+|PAT-5290be70| JEFFREY CHANDLER|       emergency| 29|       Adult|         16|
+|PAT-003ce690|      LARRY DIXON|             icu| 29|       Adult|         11|
+|PAT-18f78014|    KENNETH SCOTT|general_medicine| 77|      Senior|         13|
+|PAT-69dc0dc1|      APRIL FROST|general_medicine| 37|       Adult|         11|
+|PAT-95afe21e|  MICHELLE HARMON|       emergency|  7|       Minor|         15|
+|PAT-cc50ad71|      HELEN JONES|         surgery| 31|       Adult|         11|
+|PAT-0beb4754|     ERIN EDWARDS|general_medicine| 86|      Senior|         12|
+|PAT-3223420e|   MICHELLE EVANS|       emergency|  7|       Minor|         14|
+|PAT-f0682772|     JASON POWELL|general_medicine| 87|      Senior|         12|
+|PAT-af65396f|   CAMERON FISHER|       emergency| 53|       Adult|         14|
+|PAT-5e3f8747| ELIZABETH KELLEY|             icu| 34|       Adult|         16|
+|PAT-ba5529f4|    DUSTIN JORDAN|general_medicine| 45|       Adult|         13|
++------------+-----------------+----------------+---+------------+-----------+
+only showing top 20 rows
+
+==========================================================================================
+
+SQL:
+CASE
+  WHEN condition
+  THEN result
+  ELSE result
+END
+
+↓
+
+PySpark:
+when(condition, result)
+.when(condition, result)
+.otherwise(result)
