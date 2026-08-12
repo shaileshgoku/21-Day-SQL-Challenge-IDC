@@ -1,0 +1,134 @@
+# 1. Extract the year from all patient arrival dates.
+
+import pyspark.sql.functions as F
+
+patients_df.select(F.year("arrival_date").alias("arrival_year")).show()
+
++------------+
+|arrival_year|
++------------+
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
+|        2025|
++------------+
+only showing top 20 rows
+
+
+
+# 2. Calculate the length of stay for each patient (departure_date - arrival_date).
+
+patients_df.select(F.col("name"),F.date_diff("departure_date","arrival_date").alias("length_of_stay")).show()
+
++-----------------+--------------+
+|             name|length_of_stay|
++-----------------+--------------+
+|Richard Rodriguez|             6|
+|   Shannon Walker|             1|
+|     Julia Torres|             6|
+|  Crystal Johnson|            11|
+|      Garrett Lin|             7|
+|        Diana May|             4|
+|  William Herrera|             1|
+|    Ashley Waller|            14|
+|     Victor Baker|            14|
+| Jeffrey Chandler|            13|
+|      Larry Dixon|             2|
+|    Kenneth Scott|             2|
+|      April Frost|             4|
+|  Michelle Harmon|             7|
+|      Helen Jones|            12|
+|     Erin Edwards|             2|
+|   Michelle Evans|             7|
+|     Jason Powell|            13|
+|   Cameron Fisher|             5|
+|        Megan Orr|             8|
++-----------------+--------------+
+only showing top 20 rows
+
+
+
+# 3. Find all patients who arrived in a specific month.
+
+patients_df.select(F.col("name"),F.monthname("arrival_date").alias("arrived_date")).show()
+
++-----------------+------------+
+|             name|arrived_date|
++-----------------+------------+
+|Richard Rodriguez|         Mar|
+|   Shannon Walker|         Dec|
+|     Julia Torres|         Jun|
+|  Crystal Johnson|         Oct|
+|      Garrett Lin|         Feb|
+|        Diana May|         Jun|
+|  William Herrera|         Dec|
+|    Ashley Waller|         May|
+|     Victor Baker|         Jul|
+| Jeffrey Chandler|         Nov|
+|      Larry Dixon|         Jan|
+|    Kenneth Scott|         Jun|
+|      April Frost|         Nov|
+|  Michelle Harmon|         Feb|
+|      Helen Jones|         Jun|
+|     Erin Edwards|         Oct|
+|   Michelle Evans|         Nov|
+|     Jason Powell|         Sep|
+|   Cameron Fisher|         Aug|
+|        Megan Orr|         Apr|
++-----------------+------------+
+only showing top 20 rows
+
+
+
+
+
+# Question: Calculate the average length of stay (in days) for each service,
+# showing only services where the average stay is more than 7 days.
+# Also show the count of patients and order by average stay descending.
+
+from pyspark.sql.functions import col
+
+patients_df \
+    .withColumn(
+        "length_of_stay",
+        F.datediff("departure_date", "arrival_date")
+    ) \
+    .groupBy("service") \
+    .agg(
+        F.count("*").alias("patients_count"),
+        F.avg("length_of_stay").alias("avg_stay_length")
+    ) \
+    .filter(
+        F.col("avg_stay_length") > 7
+    ) \
+    .orderBy(
+        F.col("avg_stay_length").desc()
+    ) \
+    .show()
+
++---------+--------------+-----------------+
+|  service|patients_count|  avg_stay_length|
++---------+--------------+-----------------+
+|  surgery|           254|7.866141732283465|
+|      ICU|           241|7.605809128630705|
+|emergency|           263|7.159695817490494|
++---------+--------------+-----------------+
+
+
+
